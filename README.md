@@ -4,4 +4,4 @@ The project is broken into two separate GitHub repositories and Eclipse Java pro
 
 For more details, see the project guides at:
 
-<https://usf-cs212-fall2019.github.io/guides/>
+<https://usf-cs212-2020.github.io/guides/>
