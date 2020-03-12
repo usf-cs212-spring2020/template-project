@@ -1,6 +1,4 @@
-
-# This is a basic workflow to help you get started with Actions
-
+# Name of the workflow
 name: CI
 
 # Controls when the action will run. Triggers the workflow on push or pull request 
@@ -20,9 +18,6 @@ jobs:
       matrix:
         test: [Project1Test, Project2Test]
     runs-on: ubuntu-latest
-  # endToEnd tests
-
-    # The type of runner that the job will run on
 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -48,6 +43,7 @@ jobs:
         curl https://repo1.maven.org/maven2/org/antlr/antlr4/4.7.2/antlr4-4.7.2-complete.jar > antlr-4.7.2-complete.jar
         cd ..
    # Runs a set of commands using the runners shell
+   # Does this process for each test in matrix.test
     - name: Run ${{ matrix.test }}
       run: |
         git clone https://github.com/usf-cs212-spring2020/project-tests.git
