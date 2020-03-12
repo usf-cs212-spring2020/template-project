@@ -51,3 +51,4 @@ jobs:
         javac -Xdoclint:missing/private -Werror -cp "libraries:libraries/*:Project:Project/*" -d project-tests/Project\ Tests/bin/ Project/src/*.java project-tests/Project\ Tests/src/*.java
         cd project-tests/Project\ Tests
         java -cp "../../libraries/*" org.junit.platform.console.ConsoleLauncher -cp "bin/" --fail-if-no-tests --reports-dir="reports/" --details="tree" --select-class ${{ matrix.test }}
+        
