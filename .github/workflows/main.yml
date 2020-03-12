@@ -51,7 +51,7 @@ jobs:
     - name: Run ${{ matrix.test }}
       run: |
         git clone https://github.com/usf-cs212-spring2020/project-tests.git
-        mkdir project-tests/Project\ Tests/src/binå
+        mkdir project-tests/Project\ Tests/src/bin
         javac -Xdoclint:missing/private -Werror -cp "libraries:libraries/*:Project:Project/*" -d project-tests/Project\ Tests/bin/ Project/src/*.java project-tests/Project\ Tests/src/*.java
         cd project-tests/Project\ Tests
         java -cp "../../libraries/*" org.junit.platform.console.ConsoleLauncher -cp "bin/" --fail-if-no-tests --reports-dir="reports/" --details="tree" --select-class ${{ matrix.test }}
