@@ -9,8 +9,6 @@ on:
   pull_request:
     branches: [ master ]
 
-
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   end-to-end:
@@ -18,7 +16,6 @@ jobs:
       matrix:
         test: [Project1Test, Project2Test]
     runs-on: ubuntu-latest
-
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -31,8 +28,9 @@ jobs:
         architecture: x64 # (x64 or x86) - defaults to x64
     - name: Set up libraries
       run: |
+        echo "Downloading libraries"
         mkdir libraries
-        cd libraries
+        cd libraries/
         curl -O https://repo1.maven.org/maven2/org/apache/opennlp/opennlp-tools/1.9.2/opennlp-tools-1.9.2.jar
         curl -O https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-core/2.13.0/log4j-core-2.13.0.jar
         curl -O https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-api/2.13.0/log4j-api-2.13.0.jar
@@ -44,11 +42,14 @@ jobs:
         cd ..
    # Runs a set of commands using the runners shell
    # Does this process for each test in matrix.test
+    - name: Compile
+      run: |
+        echo "Cloning project-tests..."
+        git clone https://github.com/usf-cs212-spring2020/project-tests.git
+        echo "Compiling everything..."
+        javac -Xdoclint:missing/private -Werror -cp "libraries:libraries/*:Project:Project/*" -d project-tests/Project\ Tests/bin/ Project/src/*.java project-tests/Project\ Tests/src/*.java
     - name: Run ${{ matrix.test }}
       run: |
-        git clone https://github.com/usf-cs212-spring2020/project-tests.git
-        mkdir project-tests/Project\ Tests/src/bin
-        javac -Xdoclint:missing/private -Werror -cp "libraries:libraries/*:Project:Project/*" -d project-tests/Project\ Tests/bin/ Project/src/*.java project-tests/Project\ Tests/src/*.java
         cd project-tests/Project\ Tests
         java -cp "../../libraries/*" org.junit.platform.console.ConsoleLauncher -cp "bin/" --fail-if-no-tests --reports-dir="reports/" --details="tree" --select-class ${{ matrix.test }}
         
